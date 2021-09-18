@@ -1,0 +1,5 @@
+com/termchat/termchat/models/RoomModel.class
+com/termchat/termchat/models/UserRepository.class
+com/termchat/termchat/models/UserModel.class
+com/termchat/termchat/models/SeenModel.class
+com/termchat/termchat/models/ChatModel.class
