@@ -20,14 +20,27 @@ import com.termchat.termchat.models.RoomModel ;
 @Table(name="user")
 public class UserModel{
 
+		
 		@Id 
 		@GeneratedValue(strategy=GenerationType.AUTO)
-		private long id ;   
-		private String name ; 
-		private String password ; 
-		private RoomModel room ; 
+		@Column(name="id")
+		private long id ; 
+
+		@Column(name="name")
+		private String name ;
+
+		@Column(name="password") 
+		private String password ;
+
+		@Column(name="room") 
+		private RoomModel room ;
+
+		@Column(name="chat") 
 		private ChatModel chat;
+
+		@Column(name="seen")
 		private SeenModel seen;
+
 
 
 
@@ -36,7 +49,7 @@ public class UserModel{
 
 		}
 		
-		@Column(name="id")
+		
 		public long  getId(){
 			return this.id ;
 		}
@@ -45,7 +58,6 @@ public class UserModel{
 			this.name = name ;
 		}
 
-		@Column(name="name")
 		public String getName(){
 			return this.name ; 
 
@@ -55,7 +67,6 @@ public class UserModel{
 			this.password = password ;
 		}
 
-		@Column(name="password")
 		public String getPassword(){
 			return this.password ; 
 
@@ -65,7 +76,6 @@ public class UserModel{
 			this.room = room ;
 		}
 
-		@Column(name="room" , nullable=true)
 		public RoomModel getRoom(){
 			return this.room ; 
 
@@ -76,7 +86,6 @@ public class UserModel{
 			this.chat = chat ;
 		}
 
-		@Column(name="chat" , nullable=true)
 		public ChatModel getChat(){
 			return this.chat ; 
 
@@ -86,7 +95,6 @@ public class UserModel{
 			this.seen = seen ;
 		}
 
-		@Column(name="seen" , nullable=true)
         public SeenModel getSeen(){
 			return this.seen ; 
 

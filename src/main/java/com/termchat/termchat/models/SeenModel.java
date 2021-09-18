@@ -26,6 +26,7 @@ public class SeenModel{
 
 		}
 		
+		
 		public long  getId(){
 			return this.id ;
 		}

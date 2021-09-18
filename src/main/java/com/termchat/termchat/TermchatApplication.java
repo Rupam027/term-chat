@@ -54,8 +54,9 @@ public class TermchatApplication {
 		 entitymanager.setDataSource(datasource());
 		 entitymanager.setPackagesToScan("com.termchat.termchat.models");
 
-		 JpaVendorAdapter ven = new HibernateJpaVendorAdapter();
-		 entityManager.	setPersistenceUnitManager(ven);
+		 JpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
+		 entitymanager.setJpaVendorAdapter(vendor);
+      	 
 
 		 return entitymanager ; 
 

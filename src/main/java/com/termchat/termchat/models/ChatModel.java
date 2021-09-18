@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
+
 
 
 import com.termchat.termchat.models.ChatModel ; 
@@ -31,6 +33,8 @@ public class ChatModel{
 
 		}
 
+
+		
 		public long  getId(){
 			return this.id ;
 		}
@@ -48,6 +52,7 @@ public class ChatModel{
 			this.room = room ;
 		}
 
+		
 		public RoomModel getRoom(){
 			return this.room ; 
 
