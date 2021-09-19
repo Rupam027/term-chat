@@ -1,7 +1,7 @@
 com/termchat/termchat/controllers/User.class
 com/termchat/termchat/TermchatApplication.class
-com/termchat/termchat/models/RoomModel.class
 com/termchat/termchat/models/UserRepository.class
+com/termchat/termchat/models/RoomModel.class
 com/termchat/termchat/models/SeenModel.class
 com/termchat/termchat/controllers/User$Response.class
 com/termchat/termchat/models/ChatModel.class

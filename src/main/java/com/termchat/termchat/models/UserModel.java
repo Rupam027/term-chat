@@ -1,16 +1,11 @@
 package com.termchat.termchat.models ;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.termchat.termchat.models.SeenModel ; 
 import com.termchat.termchat.models.ChatModel ; 
 import com.termchat.termchat.models.RoomModel ; 
-
+import java.util.* ; 
 
 
 
@@ -32,14 +27,17 @@ public class UserModel{
 		@Column(name="password") 
 		private String password ;
 
-		@Column(name="room") 
-		private RoomModel room ;
+		@ManyToMany 
+		@JoinColumn(name = "rooms" , nullable = true)
+		private List<RoomModel> room ;
 
-		@Column(name="chat") 
-		private ChatModel chat;
+		@OneToMany
+		@Column(name="chat" , nullable = true) 
+		private List<ChatModel> chat;
 
-		@Column(name="seen")
-		private SeenModel seen;
+		@OneToMany
+		@Column(name="seen" , nullable = true)
+		private List<SeenModel> seen;
 
 
 
@@ -73,29 +71,29 @@ public class UserModel{
 		}
 
 		public void setRoom(RoomModel room){
-			this.room = room ;
+			this.room.add(room);
 		}
 
-		public RoomModel getRoom(){
+		public List<RoomModel> getRoom(){
 			return this.room ; 
 
 		}
 
 
 		public void setChat(ChatModel chat){
-			this.chat = chat ;
+			this.chat.add(chat) ;
 		}
 
-		public ChatModel getChat(){
+		public List<ChatModel> getChat(){
 			return this.chat ; 
 
 		}
 
 		public void setSeen(SeenModel seen){
-			this.seen = seen ;
+			this.seen.add(seen) ;
 		}
 
-        public SeenModel getSeen(){
+        public List<SeenModel> getSeen(){
 			return this.seen ; 
 
 		}

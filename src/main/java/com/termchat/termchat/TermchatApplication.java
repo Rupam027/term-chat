@@ -47,7 +47,7 @@ public class TermchatApplication {
 	}
 
 
-	@Bean(name="entityManageFactory")
+	@Bean(name="entityManagerFactory")
 	public  LocalContainerEntityManagerFactoryBean entitymanagerfactory(){
 
 		 LocalContainerEntityManagerFactoryBean entitymanager = new  LocalContainerEntityManagerFactoryBean();

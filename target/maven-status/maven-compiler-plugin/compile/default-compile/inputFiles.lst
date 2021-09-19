@@ -1,6 +1,6 @@
 /home/rupam/term-chat/src/main/java/com/termchat/termchat/TermchatApplication.java
-/home/rupam/term-chat/src/main/java/com/termchat/termchat/models/ChatModel.java
 /home/rupam/term-chat/src/main/java/com/termchat/termchat/controllers/User.java
+/home/rupam/term-chat/src/main/java/com/termchat/termchat/models/ChatModel.java
 /home/rupam/term-chat/src/main/java/com/termchat/termchat/models/UserModel.java
 /home/rupam/term-chat/src/main/java/com/termchat/termchat/models/UserRepository.java
 /home/rupam/term-chat/src/main/java/com/termchat/termchat/models/RoomModel.java

@@ -1,10 +1,7 @@
 package com.termchat.termchat.models ;   
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.* ;
+
 import com.termchat.termchat.models.UserModel ; 
 import com.termchat.termchat.models.ChatModel ; 
 
@@ -17,8 +14,14 @@ public class SeenModel{
 
 		@Id 
 		@GeneratedValue(strategy=GenerationType.AUTO)
-		private long id ;   
+		private long id ; 
+
+		@ManyToOne
+		@JoinColumn(name = "user_id")  
 	 	private UserModel user ; 
+
+	 	@ManyToOne
+	 	@JoinColumn(name = "chat_id")
 		private ChatModel chat;
 	
 		public void setId(long id){

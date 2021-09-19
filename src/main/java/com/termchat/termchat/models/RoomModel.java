@@ -1,13 +1,9 @@
 package com.termchat.termchat.models ;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.* ; 
 import com.termchat.termchat.models.UserModel ; 
 import com.termchat.termchat.models.ChatModel ; 
-
+import java.util.* ;
 
 
 @Entity
@@ -20,8 +16,15 @@ public class RoomModel{
 		private String name ; 
 		private String created_on ; 
 		private String created_by ; 
-		private ChatModel chat;
-		private UserModel user;
+		
+		@OneToMany
+		@Column(name = "chat" , nullable = true)
+		private List<ChatModel> chat;
+
+
+		@ManyToMany 
+		@JoinColumn(name = "users" , nullable = true)
+		private List<UserModel> user;
 
 		public void setId(long id){
 			this.id = id ;
@@ -42,19 +45,19 @@ public class RoomModel{
 		}
 
 		public void setUser(UserModel user){
-			this.user = user ;
+			this.user.add(user) ;
 		}
 
-		public UserModel getUser(){
+		public List<UserModel> getUser(){
 			return this.user ; 
 
 		}
 
 		public void setChat(ChatModel chat){
-			this.chat = chat ;
+			this.chat.add(chat) ;
 		}
 
-		public ChatModel getChat(){
+		public List<ChatModel> getChat(){
 			return this.chat ; 
 
 		}

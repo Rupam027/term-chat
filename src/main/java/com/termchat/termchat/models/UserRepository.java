@@ -10,6 +10,6 @@ import com.termchat.termchat.models.UserModel ;
 @Repository
 public interface UserRepository extends CrudRepository<UserModel , Long>{
 
-	public List<UserModel> findAllUser(long id);
+	public List<UserModel> findById(long id);
 
 }

@@ -1,13 +1,8 @@
 package com.termchat.termchat.models ;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-
+import javax.persistence.* ;
+import java.util.* ; 
 
 
 import com.termchat.termchat.models.ChatModel ; 
@@ -25,9 +20,20 @@ public class ChatModel{
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		private long id ;   
 		private String message ; 
+
+		@ManyToOne
+		@JoinColumn(name = "room_id")
 		private RoomModel room ; 
+
+		@ManyToOne
+		@JoinColumn(name = "user_id")
 		private UserModel user;
-		private SeenModel seen;
+
+		@OneToMany
+		@JoinColumn(name = "seen_id")
+		private List<SeenModel> seen;
+		
+
 		public void setId(long id){
 			this.id = id ;
 
@@ -68,10 +74,10 @@ public class ChatModel{
 		}
 
 		public void setSeen(SeenModel seen){
-			this.seen = seen ;
+			this.seen.add(seen) ;
 		}
 
-		public SeenModel getSeen(){
+		public List<SeenModel> getSeen(){
 			return this.seen ; 
 
 		}
