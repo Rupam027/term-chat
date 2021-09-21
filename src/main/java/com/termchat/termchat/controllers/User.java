@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired ;
 
 import org.springframework.http.MediaType ; 
 import com.termchat.termchat.models.* ; 
+import java.util.* ; 
+
 
 
 class AuthDetails{
@@ -85,9 +87,20 @@ public class User {
 	@ResponseBody 
 	public Response login(@RequestBody AuthDetails details){
 
-		if(details.getUsername().equals("Rupam") && details.getPassword().equals("rupam2000"))
-		return new Response("Authenticated");
-		else
+		List<UserModel> userList = repo.findByName(details.getUsername()) ; 
+		boolean IfUsernameExist = (userList.size() == 1)?true : false ; 
+		if(IfUsernameExist){
+
+			String password = userList.get(0).getPassword(); 
+			
+
+			if(details.getPassword().equals(password)) 
+			return new Response("Authenticated");
+			else
+			return new Response("Unauthenticated");
+
+		}
+
 		return new Response("Unauthenticated") ; 
 	
 	}
@@ -96,9 +109,17 @@ public class User {
 	@ResponseBody
 	public Object register(@RequestBody AuthDetails details){
 	 	UserModel user = new UserModel() ; 
+	 	
+
+		
 
 	 	try{
+	 	
+		boolean IfUsernameExist = (repo.findByName(details.getUsername()).size() == 0)?false : true ; 
 		
+		if(IfUsernameExist)
+			return new Response("Already Present");
+
 		user.setName(details.getUsername());
 		user.setPassword(details.getPassword());
 		return repo.save(user);
@@ -111,5 +132,9 @@ public class User {
 
 		}
 	}
+
+
+
+	
 
 }

@@ -7,7 +7,7 @@ import java.util.* ;
 
 
 @Entity
-@Table(name="room")
+@Table(name="Room")
 public class RoomModel{
 
 		@Id 

@@ -9,7 +9,7 @@ import com.termchat.termchat.models.ChatModel ;
 
 
 @Entity
-@Table(name="seen")
+@Table(name="Seen")
 public class SeenModel{
 
 		@Id 

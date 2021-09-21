@@ -13,7 +13,7 @@ import com.termchat.termchat.models.UserModel ;
 
 
 @Entity
-@Table(name="chat")
+@Table(name="Chat")
 public class ChatModel{
 
 		@Id 

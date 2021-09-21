@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.config.* ;
 import org.springframework.orm.jpa.* ;
 import org.springframework.orm.jpa.vendor.* ; 
 import org.springframework.jdbc.datasource.* ; 
+import java.util.*; 
+
 
 
 
@@ -56,6 +58,7 @@ public class TermchatApplication {
 
 		 JpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
 		 entitymanager.setJpaVendorAdapter(vendor);
+		 
       	 
 
 		 return entitymanager ; 
@@ -64,7 +67,7 @@ public class TermchatApplication {
 
 	}		
 	
-
+	
 
 
 

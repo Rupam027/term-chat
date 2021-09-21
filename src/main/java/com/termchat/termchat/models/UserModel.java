@@ -12,13 +12,14 @@ import java.util.* ;
 
 
 @Entity
-@Table(name="user")
+@Table(name="Chatters")
+@SequenceGenerator(name="chatters_chatter_id_seq" , initialValue=1 , allocationSize = 1 , sequenceName="chatters_chatter_id_seq")
 public class UserModel{
 
 		
 		@Id 
-		@GeneratedValue(strategy=GenerationType.AUTO)
-		@Column(name="id")
+		@GeneratedValue(strategy=GenerationType.SEQUENCE , generator = "chatters_chatter_id_seq")
+		@Column(name="chatter_id")
 		private long id ; 
 
 		@Column(name="name")
