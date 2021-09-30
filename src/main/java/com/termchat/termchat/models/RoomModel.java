@@ -8,23 +8,34 @@ import java.util.* ;
 
 @Entity
 @Table(name="Room")
+@SequenceGenerator(name="room_id_seq" , initialValue=1 , allocationSize = 1 , sequenceName="room_id_seq")
 public class RoomModel{
 
 		@Id 
-		@GeneratedValue(strategy=GenerationType.AUTO)
+		@GeneratedValue(strategy=GenerationType.SEQUENCE , generator = "room_id_seq")
+		@Column(name="id")
 		private long id ;   
-		private String name ; 
+
+		private String name ;
+
+
 		private String created_on ; 
 		private String created_by ; 
+		 	
+
 		
-		@OneToMany
-		@Column(name = "chat" , nullable = true)
-		private List<ChatModel> chat;
 
 
-		@ManyToMany 
-		@JoinColumn(name = "users" , nullable = true)
+		@ManyToMany
+		@JoinColumn(name = "chatters" , nullable = true)
 		private List<UserModel> user;
+
+		public RoomModel(){
+			this.id = 0 ; 
+			this.user = new ArrayList<UserModel>();
+
+		}
+
 
 		public void setId(long id){
 			this.id = id ;
@@ -34,6 +45,9 @@ public class RoomModel{
 		public long  getId(){
 			return this.id ; 
 		}
+
+
+		
 
 		public void setName(String name){
 			this.name = name ;
@@ -53,17 +67,16 @@ public class RoomModel{
 
 		}
 
-		public void setChat(ChatModel chat){
-			this.chat.add(chat) ;
-		}
-
-		public List<ChatModel> getChat(){
-			return this.chat ; 
+		public void removeUser(UserModel user){
+			this.user.removeIf(u -> u.getName() == user.getName());
 
 		}
+
+
 
 		public void setCreated_on(String created_on){
-			this.created_on = created_on ;
+			this.created_on = created_on ; 
+
 		}
 
 		public String getCreated_on(){

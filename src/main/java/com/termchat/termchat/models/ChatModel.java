@@ -14,24 +14,23 @@ import com.termchat.termchat.models.UserModel ;
 
 @Entity
 @Table(name="Chat")
+@SequenceGenerator(name ="chat_id_seq" , initialValue=1 , allocationSize = 1 , sequenceName="chat_id_seq")
 public class ChatModel{
 
-		@Id 
-		@GeneratedValue(strategy=GenerationType.AUTO)
+		@Id
+		@GeneratedValue(strategy=GenerationType.SEQUENCE , generator="chat_id_seq" )
+		@Column(name="id")
 		private long id ;   
 		private String message ; 
 
 		@ManyToOne
-		@JoinColumn(name = "room_id")
+		@JoinColumn(name = "room" , referencedColumnName="id")
 		private RoomModel room ; 
 
 		@ManyToOne
-		@JoinColumn(name = "user_id")
+		@JoinColumn(name = "chatters" , referencedColumnName="chatter_id")
 		private UserModel user;
 
-		@OneToMany
-		@JoinColumn(name = "seen_id")
-		private List<SeenModel> seen;
 		
 
 		public void setId(long id){
@@ -73,12 +72,5 @@ public class ChatModel{
 
 		}
 
-		public void setSeen(SeenModel seen){
-			this.seen.add(seen) ;
-		}
-
-		public List<SeenModel> getSeen(){
-			return this.seen ; 
-
-		}
+		
 }

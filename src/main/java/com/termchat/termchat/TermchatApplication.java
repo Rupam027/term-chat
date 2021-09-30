@@ -3,12 +3,15 @@ package com.termchat.termchat;
 import java.util.* ; 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.beans.factory.annotation.* ; 
 import org.springframework.context.annotation.* ; 
 import org.springframework.data.jpa.repository.config.* ; 
 import org.springframework.orm.jpa.* ;
 import org.springframework.orm.jpa.vendor.* ; 
-import org.springframework.jdbc.datasource.* ; 
+import org.springframework.jdbc.datasource.* ;
+import javax.persistence.*; 
+import org.springframework.transaction.PlatformTransactionManager;
 import java.util.*; 
 
 
@@ -18,8 +21,10 @@ import java.util.*;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.termchat.termchat.models")
+@EntityScan(basePackages = "com.termchat.termchat.models")
 public class TermchatApplication {
 
+	
 	
 	@Value("${spring.datasource.driver-class-name}")
 	private String DriverClassName ;  
@@ -55,7 +60,7 @@ public class TermchatApplication {
 		 LocalContainerEntityManagerFactoryBean entitymanager = new  LocalContainerEntityManagerFactoryBean();
 		 entitymanager.setDataSource(datasource());
 		 entitymanager.setPackagesToScan("com.termchat.termchat.models");
-
+		 entitymanager.setPersistenceUnitName("org.hibernate.jpa.HibernatePersistenceProvider");
 		 JpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
 		 entitymanager.setJpaVendorAdapter(vendor);
 		 
@@ -66,8 +71,22 @@ public class TermchatApplication {
 
 
 	}		
+
+	/*
+
+	@Bean(name = "transactionmanager") 
+	public PlatformTransactionManager transactionmanager(EntityManagerFactory entitymanagerfactory)
+	{
+
+		JpaTransactionManager tx = new JpaTransactionManager();
+		tx.setEntityManagerFactory(entitymanagerfactory);
+
+		return tx ; 
+
+
+	}
 	
-	
+	*/
 
 
 

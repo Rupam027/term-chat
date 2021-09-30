@@ -10,19 +10,20 @@ import com.termchat.termchat.models.ChatModel ;
 
 @Entity
 @Table(name="Seen")
+@SequenceGenerator(name="seen_id_seq" , initialValue=1 , allocationSize = 1 , sequenceName="seen_id_seq")
 public class SeenModel{
 
 		@Id 
-		@GeneratedValue(strategy=GenerationType.AUTO)
+		@GeneratedValue(strategy=GenerationType.SEQUENCE , generator="seen_id_seq")
 		private long id ; 
 
 		@ManyToOne
-		@JoinColumn(name = "user_id")  
-	 	private UserModel user ; 
+		@JoinColumn(name = "chatters" , referencedColumnName="chatter_id") 
+		private UserModel user ; 
 
 	 	@ManyToOne
-	 	@JoinColumn(name = "chat_id")
-		private ChatModel chat;
+	 	@JoinColumn(name = "chat" , referencedColumnName="id")
+	 	private ChatModel chat;
 	
 		public void setId(long id){
 			this.id = id ;

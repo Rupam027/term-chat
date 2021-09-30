@@ -1,16 +1,14 @@
 package com.termchat.termchat.controllers; 
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.* ;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired ; 
 
-//import org.springframework.context.annotation.Beans;
 
 import org.springframework.http.MediaType ; 
 import com.termchat.termchat.models.* ; 
+
 import java.util.* ; 
 
 
@@ -57,6 +55,7 @@ public class User {
 	@Autowired 
 	UserRepository repo ; 
 
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
 
 	class Response{
 
@@ -87,15 +86,23 @@ public class User {
 	@ResponseBody 
 	public Response login(@RequestBody AuthDetails details){
 
+
+
 		List<UserModel> userList = repo.findByName(details.getUsername()) ; 
-		boolean IfUsernameExist = (userList.size() == 1)?true : false ; 
-		if(IfUsernameExist){
+		
+		if(userList.size() == 1){
 
 			String password = userList.get(0).getPassword(); 
-			
+			String sid = userList.get(0).getSession_id();
+			if(sid != null)
+			return new Response("Already Logged In"); 
 
-			if(details.getPassword().equals(password)) 
-			return new Response("Authenticated");
+			if(encoder.matches(details.getPassword() , password)) {
+			
+			sid = UUID.randomUUID().toString();
+			repo.updateSession(sid , details.getUsername());
+			return new Response("Authenticated with generated session : " + sid);
+			}
 			else
 			return new Response("Unauthenticated");
 
@@ -105,7 +112,7 @@ public class User {
 	
 	}
 
-	@PostMapping(value = "/auth/register" , consumes=MediaType.APPLICATION_JSON_VALUE , produces=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/auth/register" , produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Object register(@RequestBody AuthDetails details){
 	 	UserModel user = new UserModel() ; 
@@ -115,17 +122,17 @@ public class User {
 
 	 	try{
 	 	
-		boolean IfUsernameExist = (repo.findByName(details.getUsername()).size() == 0)?false : true ; 
-		
-		if(IfUsernameExist)
-			return new Response("Already Present");
+				
+		if(repo.findByName(details.getUsername()).size() == 1)
+			return new Response("Username Not Available");
 
+		
 		user.setName(details.getUsername());
-		user.setPassword(details.getPassword());
+		user.setPassword(encoder.encode(details.getPassword()));
 		return repo.save(user);
 		}
 		catch(Exception e){
-			System.out.print(user.getName() + user.getPassword() + user.getRoom() + user.getChat() + user.getSeen());
+			System.out.print(user.getName() + user.getPassword());
 			return new Response(e.toString());
 
 
@@ -134,7 +141,41 @@ public class User {
 	}
 
 
+	@GetMapping(value="/auth/logout/{name}/{sid}" , produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Response logout(@PathVariable("sid") String sid , @PathVariable("name") String name){
+		List<UserModel> userList = repo.findByName(name) ; 
+		if(userList.size() == 0)
+			return new Response("Unauthenticated");
+		if(userList.get(0).getSession_id() == null)
+			return new Response("Already Logged Out");
 
+		repo.updateSession(null , name);
+		return new Response("Logged Out");
+	}
+
+	@GetMapping(value="/auth/delete/{name}/{sid}" , produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Response deleteAccount(@PathVariable("name") String name , @PathVariable("sid") String sid){
+		List<UserModel> userList = repo.findByName(name) ; 
+		if(userList.size() == 0)
+			return new Response("Unauthenticated");
+
+		if(userList.get(0).getSession_id() == null)
+			return new Response("Logged Out");
+
+		if(!!userList.get(0).getSession_id().equals(sid))
+			return new Response("Unauthenticated");
+
+
+		repo.deleteByName(name);
+		return new Response("Deleted Account");
+
+
+
+	}
+
+	
 	
 
 }

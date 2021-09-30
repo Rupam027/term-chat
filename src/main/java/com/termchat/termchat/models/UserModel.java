@@ -28,23 +28,31 @@ public class UserModel{
 		@Column(name="password") 
 		private String password ;
 
+		@Column(name = "session_id" , nullable=true)
+		private String session_id ;
+
 		@ManyToMany 
 		@JoinColumn(name = "rooms" , nullable = true)
 		private List<RoomModel> room ;
 
-		@OneToMany
-		@Column(name="chat" , nullable = true) 
-		private List<ChatModel> chat;
-
-		@OneToMany
-		@Column(name="seen" , nullable = true)
-		private List<SeenModel> seen;
+		
 
 
 
 
 		public void setId(long id){
 			this.id = id ;
+
+		}
+		
+		
+		public String getSession_id(){
+			return this.session_id ;
+		}
+
+
+		public void setSession_id(String id){
+			this.session_id = session_id ;
 
 		}
 		
@@ -81,21 +89,4 @@ public class UserModel{
 		}
 
 
-		public void setChat(ChatModel chat){
-			this.chat.add(chat) ;
-		}
-
-		public List<ChatModel> getChat(){
-			return this.chat ; 
-
-		}
-
-		public void setSeen(SeenModel seen){
-			this.seen.add(seen) ;
-		}
-
-        public List<SeenModel> getSeen(){
-			return this.seen ; 
-
-		}
 }
